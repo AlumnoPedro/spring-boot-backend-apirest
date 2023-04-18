@@ -1,5 +1,7 @@
 package com.bolsadeideas.springboot.backend.apirest.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -31,6 +33,11 @@ public class Cliente implements Serializable {
     private Date createAt;
 
     private String foto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="region_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Region region;
 
     /*@PrePersist
     public void prePersist(){
@@ -82,6 +89,14 @@ public class Cliente implements Serializable {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     private static final long serialVersionUID = 1L;
